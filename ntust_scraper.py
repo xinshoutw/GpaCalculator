@@ -50,13 +50,11 @@ class NtustGradeScraper:
             r_login = self.client.post(self.urls["sso_login"], data=payload)
 
             if r_login.status_code != 200:
-                print(f"[!] SSO Login endpoint returned {r_login.status_code}")
                 return False
 
             # 4. 解析 Javascript Redirect 網址
             match = re.search(r"window\.location\.href='([^']+)'", r_login.text)
             if not match:
-                # print("[!] 找不到登入後的跳轉連結，可能帳密錯誤。")
                 return False
 
             redirect_url = match.group(1)
@@ -66,14 +64,11 @@ class NtustGradeScraper:
 
             # 6. 檢查是否取得關鍵 Cookie
             if ".ASPXAUTH" in self.client.cookies:
-                # print("[+] 成功取得 .ASPXAUTH Cookie")
                 return True
             else:
-                print("[!] 流程結束但未發現 .ASPXAUTH Cookie")
                 return False
 
         except Exception as e:
-            print(f"[!] 登入過程發生錯誤: {e}")
             return False
 
     def fetch_grades(self) -> list:
@@ -121,7 +116,6 @@ class NtustGradeScraper:
             return courses
 
         except Exception as e:
-            print(f"[!] 抓取成績失敗: {e}")
             return []
 
     def close(self):
