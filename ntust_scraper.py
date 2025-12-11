@@ -23,7 +23,6 @@ class NtustGradeScraper:
             timeout=30.0
         )
 
-        # 相關 URL 定義
         self.urls = {
             "entry": "https://stuinfosys.ntust.edu.tw/StuScoreQueryServ/StuScoreQuery",
             "sso_login": "https://ssoam.ntust.edu.tw/nidp/app/login?sid=0&sid=0",
@@ -104,7 +103,7 @@ class NtustGradeScraper:
                     credits = cols[4].get_text(strip=True)
                     grade = cols[5].get_text(strip=True)
 
-                    if course_name:  # 確保有名稱
+                    if course_name:
                         courses.append({
                             "semester": semester,
                             "course_id": course_id,
